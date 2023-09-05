@@ -1,0 +1,47 @@
+@import "../../index.scss";
+
+#container-1 { grid-area: 1 / 1 / 5 / 2; }
+#container-3 { grid-area: 5 / 1 / 10 / 2; }
+#container-2 { grid-area: 1 / 2 / 6 / 3; }
+#container-4 { grid-area: 6 / 2 / 11 / 3; }
+#container-5 { grid-area: 10 / 1 / 15 / 2; }
+#container-6 { grid-area: 11 / 2 / 15 / 3; } 
+
+.category-container {
+  border-radius: 14px;
+  border: 1px solid $bg-container-border;
+  box-shadow: 1px 1px 15px 1px rgba(150, 150, 150, 0.40);
+  position: relative;
+  margin: 15px 0;
+
+  .category-container-text {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin: 0 0 15px 20px;
+  }
+
+  h4 {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 19px;
+    color: $font-color;
+    margin: 5px 0;
+    padding: 0;
+  }
+
+  p {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14px;
+    color: $font-color;
+    margin: 0;
+  }
+
+  img {
+    position: absolute;
+    top: -15px;
+    left: 30px;
+    filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.5));
+  }
+}

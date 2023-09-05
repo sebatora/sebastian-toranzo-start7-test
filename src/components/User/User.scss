@@ -1,0 +1,83 @@
+@import "../../index.scss";
+
+.user-container {
+  
+  .user-data {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+
+    h2 {
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 31px;
+      margin: 5px 0;
+      padding: 0;
+      color: $font-color;
+    }
+
+    p {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 17px;
+      margin: 0;
+      padding: 0;
+      color: #737373;
+    }
+  }
+
+  .user-image {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background-color: $bg-img-color;
+  }
+
+  .user-score {
+    display: flex;
+    border: 1px solid $bg-container-border;
+    border-radius: 14px;
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.08);
+    height: 60px;
+    margin-top: 10px;
+    padding: 10px 0;
+    align-items: center;
+    justify-content: space-evenly;
+
+    img {
+      width: 30px;
+      height: 30px;
+    }
+
+    .vertical-line {
+      height: 50px;
+      width: 0.75px;
+      background-color: #ccc;
+      border-radius: 50%;
+    }
+
+    .user-ranking-points {
+      display: flex;
+      align-items: center;
+
+      .user-ranking-text {
+
+        margin: 0 10px;
+
+        p {
+          margin: 5px 0;
+          font-size: 12px;
+          font-weight: 400;
+        }
+
+        h3{
+          margin: 5px 0;
+          font-size: 18px;
+          font-weight: 700;
+          color: #3EB8D4
+        }
+      }
+    }
+  }
+}
