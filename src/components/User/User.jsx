@@ -6,7 +6,7 @@ import iconCoin from "../../assets/iconCoin.png";
 import Categories from "../Categories/Categories";
 import "./User.scss";
 
-function User() {
+function User( { categories } ) {
   const [userData, setUserData] = useState({
     id: "",
     username: "",
@@ -53,7 +53,7 @@ function User() {
         </div>
       </section>
 
-      <Categories />
+      <Categories categories={categories} />
     </div>
   );
 }

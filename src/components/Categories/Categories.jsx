@@ -1,17 +1,8 @@
 import React from "react";
-import { useEffect, useState } from "react";
 import CategoryCard from "../CategoryCard/CategoryCard";
 import "./Categories.scss";
 
-function Categories() {
-  const [categories, setCategories] = useState([]);
-
-  useEffect(() => {
-    fetch("https://quiz-7.com/categories.json")
-      .then((response) => response.json())
-      .then((data) => setCategories(data));
-  }, []);
-
+function Categories({ categories }) {
   return (
     <div className="categories-container">
       <h3>Let's play</h3>
