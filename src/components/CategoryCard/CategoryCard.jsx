@@ -4,7 +4,7 @@ import "./CategoryCard.scss";
 
 function CategoryCard({ id, title, questions, icon }) {
   return (
-    <Link to={`/${title}`} className="category-container" id={`container-${id}`}>
+    <Link to={`/${id}/${title.toLowerCase()}`} className="category-container" id={`container-${id}`}>
       <img src={`https://quiz-7.com${icon}`} alt={title} />
       <div className="category-container-text">
         <h4>{title}</h4>

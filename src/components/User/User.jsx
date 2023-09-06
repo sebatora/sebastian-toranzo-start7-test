@@ -6,7 +6,8 @@ import iconCoin from "../../assets/iconCoin.png";
 import Categories from "../Categories/Categories";
 import "./User.scss";
 
-function User( { categories } ) {
+function User() {
+  const [categories, setCategories] = useState([]);
   const [userData, setUserData] = useState({
     id: "",
     username: "",
@@ -22,6 +23,13 @@ function User( { categories } ) {
         setUserData(data);
       });
   }, []);
+
+  useEffect(() => {
+    fetch("https://quiz-7.com/categories.json")
+      .then((response) => response.json())
+      .then((data) => setCategories(data));
+  }, []);
+
 
   return (
     <div className="user-container">
