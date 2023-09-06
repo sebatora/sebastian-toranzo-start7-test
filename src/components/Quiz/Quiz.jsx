@@ -10,6 +10,8 @@ function Quiz() {
 
   const [questions, setQuestions] = useState([]);
   const [options, setOptions] = useState([]);
+  const [answerIndex, setAnswerIndex] = useState(null);
+  const [isAnswered, setIsAnswered] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [points, setPoints] = useState(0);
 
@@ -22,6 +24,7 @@ function Quiz() {
 
   const handleExit = () => {
     setPoints(0);
+    setCurrentQuestion(0)
     navigate("/");
   }
 
@@ -30,9 +33,19 @@ function Quiz() {
     setOptions(shuffleOptions());
   }
 
-  const handleAnswer = (event) => {
-    if (options[event.target.value].isCorrect){
+  const handleEnd = () => {
+    alert(`Sumaste ${points} puntos`)
+    setPoints(0);
+    setCurrentQuestion(0)
+    navigate("/");
+  }
+
+  const handleAnswer = (selectedAnswer, index) => {
+
+    if (selectedAnswer.isCorrect){
       setPoints(points+1)}
+
+      setIsAnswered(true)
     }
   
   useEffect(() => {
@@ -40,7 +53,7 @@ function Quiz() {
   }, []);
 
   useEffect(() => {
-    if (!isLoading)setOptions(shuffleOptions());
+    if (!isLoading) setOptions(shuffleOptions());
   }, [isLoading]);
 
   const shuffleOptions = () => {
@@ -67,7 +80,7 @@ function Quiz() {
       </section>
 
       <section className="quiz-question">
-        <div className="quiz-timer">30</div>
+        <div className="quiz-timer">TIMER</div>
         <div className="quiz-question-text">
           {
             !isLoading && questions[currentQuestion].question
@@ -80,7 +93,7 @@ function Quiz() {
           !isLoading && (
             <div>
               {options.map((option, index) => (
-                <button onClick={() => handleAnswer(event)} key={index} value={index} className="quiz-option">
+                <button onClick={() => handleAnswer(option, index)} key={index} value={index} className="quiz-option">
                   <p>{option.option}</p>
                   <div className="quiz-option-check" />
                 </button>
@@ -90,7 +103,15 @@ function Quiz() {
         }
       </section>
 
-      <button onClick={handleNext}>Next</button>
+      {
+        !isLoading && (
+          currentQuestion + 1 === questions.length ? (
+            <button onClick={handleEnd}>End</button>
+            ) : (
+            <button onClick={handleNext}>Next</button>
+          )
+        )
+      }
     </div>
   )
 }
