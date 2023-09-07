@@ -29,7 +29,7 @@ function Quiz() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [points, setPoints] = useState(0);
 
-  const [timer, setTimer] = useState(5);
+  const [timer, setTimer] = useState(30);
 
   const fetchData = async () => {
     const response = await fetch(`https://quiz-7.com/questions/${id}.json`);
@@ -43,7 +43,7 @@ function Quiz() {
     setCurrentQuestion(currentQuestion + 1);
     setOptions(shuffleOptions(questions, currentQuestion + 1));
     setAnswerIndex(null);
-    setTimer(5);
+    setTimer(30);
   };
 
   const handleEnd = () => {
