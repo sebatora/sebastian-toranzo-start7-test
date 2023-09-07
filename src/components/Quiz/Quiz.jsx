@@ -1,6 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import classNames from "classnames";
 import "./Quiz.scss";
+import Timer from "../Timer/Timer";
+
+const shuffleOptions = (questions, currentQuestion) => {
+  return [
+    { option: questions[currentQuestion].option1, isCorrect: true },
+    { option: questions[currentQuestion].option2, isCorrect: false },
+    { option: questions[currentQuestion].option3, isCorrect: false },
+    { option: questions[currentQuestion].option4, isCorrect: false },
+  ].sort(() => Math.random() - 0.5);
+};
 
 function Quiz() {
   const { id } = useParams();
@@ -14,6 +25,8 @@ function Quiz() {
   const [isAnswered, setIsAnswered] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [points, setPoints] = useState(0);
+
+  const [timer, setTimer] = useState(5);
 
   const fetchData = async () => {
     const response = await fetch(`https://quiz-7.com/questions/${id}.json`);
@@ -31,8 +44,9 @@ function Quiz() {
   const handleNext = () => {
     setIsAnswered(false);
     setCurrentQuestion(currentQuestion + 1);
-    setOptions(shuffleOptions());
-    setAnswerIndex(null)
+    setOptions(shuffleOptions(questions, currentQuestion + 1));
+    setAnswerIndex(null);
+    setTimer(5);
   };
 
   const handleEnd = () => {
@@ -45,7 +59,7 @@ function Quiz() {
   const handleAnswer = (selectedAnswer, index) => {
     if (selectedAnswer.isCorrect) setPoints(points + 1);
     setIsAnswered(true);
-    setAnswerIndex(index)
+    setAnswerIndex(index);
   };
 
   useEffect(() => {
@@ -53,17 +67,12 @@ function Quiz() {
   }, []);
 
   useEffect(() => {
-    if (!isLoading) setOptions(shuffleOptions());
+    if (!isLoading) setOptions(shuffleOptions(questions, currentQuestion));
   }, [isLoading]);
 
-  const shuffleOptions = () => {
-    return [
-      { option: questions[currentQuestion].option1, isCorrect: true },
-      { option: questions[currentQuestion].option2, isCorrect: false },
-      { option: questions[currentQuestion].option3, isCorrect: false },
-      { option: questions[currentQuestion].option4, isCorrect: false },
-    ].sort(() => Math.random() - 0.5);
-  };
+  useEffect(() => {
+    if (timer === 0) setIsAnswered(true);
+  }, [timer]);
 
   return (
     <div className="quiz-container">
@@ -71,8 +80,15 @@ function Quiz() {
         <button id="quiz-exit" onClick={handleExit}>
           X
         </button>
-        <div id="quiz-progress-bar">
-          <div id="quiz-progress-bar-full" />
+        <div className="quiz-progress-bar-container">
+          <div id="quiz-progress-bar">
+            <div
+              id="quiz-progress-bar-full"
+              style={{
+                width: `${((currentQuestion + 1) / questions.length) * 100}%`,
+              }}
+            />
+          </div>
           <span>
             {!isLoading && `${currentQuestion + 1}/${questions.length}`}
           </span>
@@ -80,28 +96,34 @@ function Quiz() {
       </section>
 
       <section className="quiz-question">
-        <div className="quiz-timer">TIMER</div>
+        <Timer timer={timer} setTimer={setTimer} />
         <div className="quiz-question-text">
-          {!isLoading && questions[currentQuestion].question}
+          <p>{!isLoading && questions[currentQuestion].question}</p>
         </div>
       </section>
 
       <section className="quiz-answers">
         {!isLoading && (
-          <div>
+          <div className="quiz-answers-container">
             {options.map((option, index) => (
               <button
                 onClick={() => handleAnswer(option, index)}
                 key={index}
                 value={index}
                 disabled={isAnswered && answerIndex !== index}
-                className={`quiz-option ${answerIndex !== null && index === answerIndex ? option.isCorrect === true ? "correct" : `incorrect ${option.isCorrect && `correct-option`}` : "" }`}
+                className={classNames("quiz-option", {
+                  correct: isAnswered && option.isCorrect,
+                  incorrect: index === answerIndex && !option.isCorrect,
+                  disabled: isAnswered,
+                })}
               >
                 <p className="quiz-option-text">{option.option}</p>
                 <div className="quiz-option-check">
-                  {
-                    answerIndex !== null && index === answerIndex ? option.isCorrect === true ? "✔️" : "✖️" : ""
-                  }
+                  {answerIndex !== null && index === answerIndex
+                    ? option.isCorrect === true
+                      ? "✔️"
+                      : "✖️"
+                    : ""}
                 </div>
               </button>
             ))}
@@ -111,10 +133,26 @@ function Quiz() {
 
       {!isLoading &&
         (currentQuestion + 1 !== questions.length ? (
-          <button onClick={handleNext} disabled={!isAnswered} >Next</button>
-          ) : (
-            <button onClick={handleEnd} disabled={!isAnswered}>End</button>
-          ))}
+          <button
+            className={classNames("next-end", {
+              disabled: !isAnswered,
+            })}
+            onClick={handleNext}
+            disabled={!isAnswered}
+          >
+            Next
+          </button>
+        ) : (
+          <button
+            className={classNames("next-end", {
+              disabled: !isAnswered,
+            })}
+            onClick={handleEnd}
+            disabled={!isAnswered}
+          >
+            End
+          </button>
+        ))}
     </div>
   );
 }

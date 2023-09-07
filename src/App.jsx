@@ -5,7 +5,6 @@ import Quiz from "./components/Quiz/Quiz";
 
 function App() {
 
-
   return (
     <main className="App">
       <Routes>
