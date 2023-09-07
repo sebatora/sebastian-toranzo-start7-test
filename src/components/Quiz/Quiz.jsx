@@ -59,6 +59,7 @@ function Quiz() {
   const handleAnswer = (selectedAnswer, index) => {
     if (selectedAnswer.isCorrect) setPoints(points + 1);
     setIsAnswered(true);
+    setTimer(0);
     setAnswerIndex(index);
   };
 
@@ -119,11 +120,8 @@ function Quiz() {
               >
                 <p className="quiz-option-text">{option.option}</p>
                 <div className="quiz-option-check">
-                  {answerIndex !== null && index === answerIndex
-                    ? option.isCorrect === true
-                      ? "✔️"
-                      : "✖️"
-                    : ""}
+                  {(isAnswered && option.isCorrect) && "✔️"}
+                  {(index === answerIndex) && (isAnswered && !option.isCorrect) && "✖️"}
                 </div>
               </button>
             ))}

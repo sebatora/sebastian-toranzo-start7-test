@@ -5,10 +5,10 @@ $bg-container-border: #F1F1F1;
 $font-color: #1C1C1C;
 $font-color-2: #3eb8d4;
 $font-color-2-hover: #3ea4d4;
-$correct: #3cbe30;
-$correct-op: #3cbe3026;
-$incorrect: #ff5341;
-$incorrect-op: #ff544126;
+$correct: #3eb8d4;
+$correct-op:#3eb8d426;
+$incorrect: rgb(255, 83, 65);
+$incorrect-op: rgba(255, 84, 65, 0.149);
 
 
 body {

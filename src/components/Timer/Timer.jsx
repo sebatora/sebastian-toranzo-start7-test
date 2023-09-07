@@ -4,7 +4,6 @@ import "./Timer.scss";
 function Timer( { timer, setTimer } ) {
 
   useEffect(() => {
-    
     const interval = setInterval(() => {
       if(timer > 0) setTimer((second) => second - 1)
     }, 1000)
