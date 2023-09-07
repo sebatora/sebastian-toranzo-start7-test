@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import QuizTopBar from "../QuizTopBar/QuizTopBar";
+import QuizTimer from "../QuizTimer/QuizTimer";
 import QuizQuestion from "../QuizQuestion/QuizQuestion";
 import QuizAnswers from "../QuizAnswers/QuizAnswers";
 import QuizNextEnd from "../QuizNextEnd/QuizNextEnd";
@@ -75,6 +76,11 @@ function Quiz() {
         currentQuestion={currentQuestion}
         questions={questions}
         isLoading={isLoading}
+      />
+
+      <QuizTimer
+        timer={timer}
+        setTimer={setTimer}
       />
 
       <QuizQuestion
