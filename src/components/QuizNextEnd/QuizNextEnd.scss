@@ -1,0 +1,28 @@
+@import "../../index.scss";
+
+.next-end {
+  display: flex;
+  align-items: center;
+  width: 70%;
+  height: 45px;
+  margin: 3% auto;
+  border: 1px solid $bg-container-border;
+  border-radius: 17px;
+  color: white;
+  background-color: gray;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 21px;
+  justify-content: center;
+  transition: 350ms;
+}
+
+.next-end:not(.disabled) {
+  background-color: $font-color-2;
+  cursor: pointer;
+}
+
+.next-end:hover:not(.disabled) {
+  background-color: $font-color-2-hover;
+  cursor: pointer;
+}

@@ -1,7 +1,6 @@
 @import "../../index.scss";
 
 .user-container {
-  
   .user-data {
     display: flex;
     align-items: center;
@@ -62,7 +61,6 @@
       align-items: center;
 
       .user-ranking-text {
-
         margin: 0 10px;
 
         p {
@@ -71,11 +69,11 @@
           font-weight: 400;
         }
 
-        h3{
+        h3 {
           margin: 5px 0;
           font-size: 18px;
           font-weight: 700;
-          color: $font-color-2
+          color: $font-color-2;
         }
       }
     }

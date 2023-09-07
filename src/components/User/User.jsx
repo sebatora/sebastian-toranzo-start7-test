@@ -30,7 +30,6 @@ function User() {
       .then((data) => setCategories(data));
   }, []);
 
-
   return (
     <div className="user-container">
       <section className="user-data">

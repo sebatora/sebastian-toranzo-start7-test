@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import classNames from "classnames";
+import QuizTopBar from "../QuizTopBar/QuizTopBar";
+import QuizQuestion from "../QuizQuestion/QuizQuestion";
+import QuizAnswers from "../QuizAnswers/QuizAnswers";
+import QuizNextEnd from "../QuizNextEnd/QuizNextEnd";
 import "./Quiz.scss";
-import Timer from "../Timer/Timer";
 
 const shuffleOptions = (questions, currentQuestion) => {
   return [
@@ -35,12 +37,6 @@ function Quiz() {
     setIsLoading(false);
   };
 
-  const handleExit = () => {
-    setPoints(0);
-    setCurrentQuestion(0);
-    navigate("/");
-  };
-
   const handleNext = () => {
     setIsAnswered(false);
     setCurrentQuestion(currentQuestion + 1);
@@ -51,8 +47,6 @@ function Quiz() {
 
   const handleEnd = () => {
     alert(`Sumaste ${points} ${points === 1 ? `punto` : `puntos`}`);
-    setPoints(0);
-    setCurrentQuestion(0);
     navigate("/");
   };
 
@@ -77,80 +71,36 @@ function Quiz() {
 
   return (
     <div className="quiz-container">
-      <section className="quiz-top-bar">
-        <button id="quiz-exit" onClick={handleExit}>
-          X
-        </button>
-        <div className="quiz-progress-bar-container">
-          <div id="quiz-progress-bar">
-            <div
-              id="quiz-progress-bar-full"
-              style={{
-                width: `${((currentQuestion + 1) / questions.length) * 100}%`,
-              }}
-            />
-          </div>
-          <span>
-            {!isLoading && `${currentQuestion + 1}/${questions.length}`}
-          </span>
-        </div>
-      </section>
+      <QuizTopBar
+        currentQuestion={currentQuestion}
+        questions={questions}
+        isLoading={isLoading}
+      />
 
-      <section className="quiz-question">
-        <Timer timer={timer} setTimer={setTimer} />
-        <div className="quiz-question-text">
-          <p>{!isLoading && questions[currentQuestion].question}</p>
-        </div>
-      </section>
+      <QuizQuestion
+        isLoading={isLoading}
+        questions={questions}
+        timer={timer}
+        setTimer={setTimer}
+        currentQuestion={currentQuestion}
+      />
 
-      <section className="quiz-answers">
-        {!isLoading && (
-          <div className="quiz-answers-container">
-            {options.map((option, index) => (
-              <button
-                onClick={() => handleAnswer(option, index)}
-                key={index}
-                value={index}
-                disabled={isAnswered && answerIndex !== index}
-                className={classNames("quiz-option", {
-                  correct: isAnswered && option.isCorrect,
-                  incorrect: index === answerIndex && !option.isCorrect,
-                  disabled: isAnswered,
-                })}
-              >
-                <p className="quiz-option-text">{option.option}</p>
-                <div className="quiz-option-check">
-                  {(isAnswered && option.isCorrect) && "✔️"}
-                  {(index === answerIndex) && (isAnswered && !option.isCorrect) && "✖️"}
-                </div>
-              </button>
-            ))}
-          </div>
-        )}
-      </section>
+      <QuizAnswers
+        isLoading={isLoading}
+        options={options}
+        isAnswered={isAnswered}
+        answerIndex={answerIndex}
+        handleAnswer={handleAnswer}
+      />
 
-      {!isLoading &&
-        (currentQuestion + 1 !== questions.length ? (
-          <button
-            className={classNames("next-end", {
-              disabled: !isAnswered,
-            })}
-            onClick={handleNext}
-            disabled={!isAnswered}
-          >
-            Next
-          </button>
-        ) : (
-          <button
-            className={classNames("next-end", {
-              disabled: !isAnswered,
-            })}
-            onClick={handleEnd}
-            disabled={!isAnswered}
-          >
-            End
-          </button>
-        ))}
+      <QuizNextEnd
+        isLoading={isLoading}
+        currentQuestion={currentQuestion}
+        questions={questions}
+        isAnswered={isAnswered}
+        handleEnd={handleEnd}
+        handleNext={handleNext}
+      />
     </div>
   );
 }
